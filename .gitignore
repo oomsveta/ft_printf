@@ -1,0 +1,29 @@
+# Vim swap files
+*.swp
+
+# WSL
+*Zone.Identifier
+
+# macOS
+.DS_Store
+*.dSYM
+
+# build leftovers
+*.a
+*.out
+*.d
+*.o
+*.thinlto.bc
+
+# clangd
+.cache
+compile_commands.json
+
+# VSCode settings
+.vscode
+
+# ctags
+tags
+
+# pyenv
+.python-version
