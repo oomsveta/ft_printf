@@ -4,6 +4,9 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 CPPFLAGS := -MMD -MP -I.
 
+BUILD_STATE := .build_state
+CURRENT_BUILD_STATE := "DEBUG=$(DEBUG) ASAN=$(ASAN)"
+
 ifdef DEBUG
     CC := clang
     CFLAGS += -g3 -Og -fsanitize=undefined
@@ -28,11 +31,18 @@ AR ?= ar
 
 all: $(NAME)
 
+$(BUILD_STATE): FORCE
+	@echo $(CURRENT_BUILD_STATE) > $@.tmp
+	@cmp -s $@ $@.tmp || mv $@.tmp $@
+	@$(RM) $@.tmp
+
 $(NAME): $(OBJ)
 	$(AR) rcs $@ $^
 
-%.o: %.c
+%.o: %.c $(BUILD_STATE)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+FORCE:
 
 clean:
 	$(RM) -- $(OBJ) $(DEP)
