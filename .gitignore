@@ -3,6 +3,7 @@
 # ... except these ones:
 !/.gitignore
 !/.gitmodules
+!/.github
 
 # Vim swap files
 *.swp

@@ -1,0 +1,30 @@
+name: Norminette
+
+on:
+  push:
+    branches: [ "**" ]
+    paths:
+      - 'src/**/*.c'
+      - 'libft/**/*.c'
+      - 'libft/**/*.h'
+      - 'include/**/*.h'
+  pull_request:
+    branches: [ "**" ]
+    paths:
+      - 'src/**/*.c'
+      - 'libft/**/*.c'
+      - 'libft/**/*.h'
+      - 'include/**/*.h'
+
+jobs:
+  check-norminette:
+    name: Norminette
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Norminette
+        uses: 42School/norminette@master
+        with:
+          args: 'include/**/*.h src/**/*.c libft/**/*.{c,h}'
