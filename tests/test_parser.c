@@ -2,6 +2,7 @@
 #include "ft_printf_internals.h"
 #include <limits.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <string.h>
 
 static t_ctx init_ctx(const char *cursor)
@@ -85,6 +86,47 @@ static void test_parse_width_basic(void **state)
     parse_width(&ctx);
 
     assert_int_equal(1337, ctx.current_specifier.width);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+}
+
+static void test_parse_width_no_width(void **state)
+{
+    (void)state;
+
+    const char *format_str = "d";
+    t_ctx ctx = init_ctx(format_str);
+    // set width to something to ensure it gets overwritten
+    ctx.current_specifier.width = 19;
+    parse_width(&ctx);
+
+    assert_int_equal(0, ctx.current_specifier.width);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+}
+
+static void test_parse_width_empty_string(void **state)
+{
+    (void)state;
+
+    const char *format_str = "";
+    t_ctx ctx = init_ctx(format_str);
+    // set width to something to ensure it gets overwritten
+    ctx.current_specifier.width = 19;
+    parse_width(&ctx);
+
+    assert_int_equal(0, ctx.current_specifier.width);
+    assert_ptr_equal(strchr(format_str, '\0'), ctx.current_specifier.cursor);
+}
+
+static void test_parse_width_int_max(void **state)
+{
+    (void)state;
+
+    char format_str[32] = {0};
+    sprintf(format_str, "%dd", INT_MAX);
+    t_ctx ctx = init_ctx(format_str);
+    parse_width(&ctx);
+
+    assert_int_equal(INT_MAX, ctx.current_specifier.width);
     assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
 }
 
@@ -177,6 +219,9 @@ int main(void)
 
         cmocka_unit_test(test_parse_width_basic),
         cmocka_unit_test(test_parse_width_overflow),
+        cmocka_unit_test(test_parse_width_int_max),
+        cmocka_unit_test(test_parse_width_no_width),
+        cmocka_unit_test(test_parse_width_empty_string),
     
         cmocka_unit_test(test_parse_width_from_args_basic),
         cmocka_unit_test(test_parse_width_from_args_negative_val),
