@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:04:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/15 19:45:48 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/15 22:11:33 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include <limits.h>
 #include <stdarg.h>
+#include <stdbool.h>
 
 void	parse_flags(t_ctx *ctx)
 {
@@ -42,28 +43,7 @@ void	parse_flags(t_ctx *ctx)
 	ctx->current_specifier.flags = flags;
 }
 
-static bool	parse_width_from_va_args(t_ctx *ctx)
-{
-	const int				width = va_arg(ctx->args, int);
-	t_conversion_specifier	*specifier;
-
-	specifier = &ctx->current_specifier;
-	specifier->width = (int)ft_abs(width);
-	if (width < 0)
-	{
-		specifier->flags.left_justify = true;
-		specifier->flags.pad_with_zeros = false;
-		if (width == INT_MIN)
-		{
-			specifier->width = 0;
-			ctx->errno = ERR_WIDTH_OVERFLOW;
-			return (false);
-		}
-	}
-	return (true);
-}
-
-bool	parse_width(t_ctx *ctx)
+static bool	parse_int(t_ctx *ctx, int *res)
 {
 	int			acc;
 	int			digit;
@@ -71,25 +51,99 @@ bool	parse_width(t_ctx *ctx)
 	const int	cutoff = INT_MAX / 10;
 	const int	cutlim = INT_MAX % 10;
 
-	if (*nptr == '*')
-	{
-		ctx->current_specifier.cursor += 1;
-		return (parse_width_from_va_args(ctx));
-	}
 	acc = 0;
 	while (ft_isdigit(*nptr))
 	{
-		digit = ft_digittoint(*nptr++);
+		digit = ft_digittoint(*nptr);
 		if (acc > cutoff || (acc == cutoff && digit > cutlim))
 		{
-			ctx->errno = ERR_WIDTH_OVERFLOW;
+			ctx->errno = ERR_INT_OVERFLOW;
+			*res = INT_MIN;
 			return (false);
 		}
 		acc = acc * 10 + digit;
+		nptr += 1;
 	}
 	ctx->current_specifier.cursor = nptr;
-	ctx->current_specifier.width = acc;
+	*res = acc;
 	return (true);
+}
+
+/**
+ * C23 7.23.6.1/4:
+ * ---------------
+ * The field width takes the form of an asterisk * (described later) or a
+ * nonnegative decimal integer.
+ *
+ * C23 7.23.6.1/5:
+ * ---------------
+ * As noted previously, a field width [...] may be indicated by an asterisk. In
+ * this case, an int argument supplies the field width. [...] A negative field
+ * width argument is taken as a - flag followed by a positive field width.
+ */
+bool	parse_width(t_ctx *ctx)
+{
+	t_conversion_specifier	*specifier;
+	int						width;
+
+	specifier = &ctx->current_specifier;
+	if (*specifier->cursor == '*')
+	{
+		specifier->cursor += 1;
+		width = va_arg(ctx->args, int);
+		specifier->width = (int)ft_abs(width);
+		if (width < 0)
+		{
+			specifier->flags.left_justify = true;
+			specifier->flags.pad_with_zeros = false;
+			if (width == INT_MIN)
+			{
+				ctx->errno = ERR_INT_OVERFLOW;
+				return (false);
+			}
+		}
+		return (true);
+	}
+	return (parse_int(ctx, &specifier->width));
+}
+
+/**
+ * C23 7.23.6.1/4:
+ * ---------------
+ * The precision takes the form of a period (.) followed either by an
+ * asterisk * (described later) or by an optional nonnegative decimal integer;
+ * if only the period is specified, the precision is taken as zero.
+ *
+ * C23 7.23.6.1/5:
+ * ---------------
+ * As noted previously, a [...] precision [...] may be indicated by an asterisk.
+ * In this case, an int argument supplies the [...] precision. [...] A negative
+ * precision argument is taken as if the precision were omitted.
+ */
+bool	parse_precision(t_ctx *ctx)
+{
+	t_conversion_specifier	*specifier;
+	int						precision;
+
+	specifier = &ctx->current_specifier;
+	specifier->has_precision = *specifier->cursor == '.';
+	if (!specifier->has_precision)
+	{
+		return (true);
+	}
+	specifier->cursor += 1;
+	if (*specifier->cursor == '*')
+	{
+		specifier->cursor += 1;
+		precision = va_arg(ctx->args, int);
+		specifier->precision = precision;
+		if (precision < 0)
+		{
+			specifier->has_precision = false;
+		}
+		return (true);
+	}
+	return (parse_int(ctx, &specifier->precision));
 }
 
 bool	parse_specifier(t_ctx *ctx, const char *str)

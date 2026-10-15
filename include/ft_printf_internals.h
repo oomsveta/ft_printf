@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:39:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/15 19:41:23 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/15 21:01:51 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_conversion_specifier
 {
 	int				width;
 	int				precision;
+	// needed to distinguish no precision set from precision set to 0
+	bool			has_precision : 1;
 	char			type;
 	t_flags			flags;
 	const char		*cursor;
@@ -47,7 +49,7 @@ typedef struct s_buffer
 typedef enum e_error
 {
 	SUCCESS = 0,
-	ERR_WIDTH_OVERFLOW,
+	ERR_INT_OVERFLOW,
 	ERR_PRECISION_OVERFLOW,
 	ERR_WRITE_FAILURE,
 }	t_error;
@@ -64,3 +66,4 @@ typedef struct s_ctx
 bool	parse_specifier(t_ctx *ctx, const char *str);
 void	parse_flags(t_ctx *ctx);
 bool	parse_width(t_ctx *ctx);
+bool	parse_precision(t_ctx *ctx);

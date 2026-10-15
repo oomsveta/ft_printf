@@ -95,8 +95,8 @@ static void test_parse_width_overflow(void **state)
     t_ctx ctx = init_ctx("99999999999999999999999d");
     parse_width(&ctx);
 
-    assert_int_equal(0, ctx.current_specifier.width);
-    assert_int_equal(ERR_WIDTH_OVERFLOW, ctx.errno);
+    assert_int_equal(INT_MIN, ctx.current_specifier.width);
+    assert_int_equal(ERR_INT_OVERFLOW, ctx.errno);
 }
 
 typedef bool (*t_parser_fn)(t_ctx *ctx);
@@ -144,8 +144,8 @@ static void test_parse_width_from_args_int_min(void **state)
     call_with_va_args(parse_width, &ctx, INT_MIN);
 
     assert_true(ctx.current_specifier.flags.left_justify);
-    assert_int_equal(0, ctx.current_specifier.width);
-    assert_int_equal(ctx.errno, ERR_WIDTH_OVERFLOW);
+    assert_int_equal(INT_MIN, ctx.current_specifier.width);
+    assert_int_equal(ctx.errno, ERR_INT_OVERFLOW);
 }
 
 static void test_parse_width_from_args_neg_disables_zero_flag(void **state)
