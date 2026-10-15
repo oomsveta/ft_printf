@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:39:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/15 19:40:30 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/15 19:41:23 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,7 @@ typedef struct s_ctx
 	va_list					args;
 	t_conversion_specifier	current_specifier;
 }	t_ctx;
+
+bool	parse_specifier(t_ctx *ctx, const char *str);
+void	parse_flags(t_ctx *ctx);
+bool	parse_width(t_ctx *ctx);
