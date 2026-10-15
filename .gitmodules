@@ -1,0 +1,5 @@
+[submodule "tests/cmocka"]
+	path = tests/cmocka
+	url = https://git.cryptomilk.org/projects/cmocka.git
+	branch = stable-2.0
+	ignore = untracked
