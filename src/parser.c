@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:04:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/15 22:11:33 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 15:33:21 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,11 +146,45 @@ bool	parse_precision(t_ctx *ctx)
 	return (parse_int(ctx, &specifier->precision));
 }
 
-bool	parse_specifier(t_ctx *ctx, const char *str)
+/**
+ * Unsupported; just skip length modifiers
+ */
+void	parse_length(t_ctx *ctx)
+{
+	const char	*cursor = ctx->current_specifier.cursor;
+
+	if (*cursor == 'l' || *cursor == 'h' || *cursor == 'D')
+	{
+		cursor += 1 + (cursor[0] == cursor[1]);
+	}
+	else if (ft_strchr("jztLH", *cursor))
+	{
+		cursor += 1;
+	}
+	else if (*cursor == 'w')
+	{
+		cursor += 1 + (cursor[1] == 'f');
+		if (*cursor == '0' || !ft_isdigit(*cursor))
+		{
+			return ;
+		}
+		while (ft_isdigit(*cursor))
+		{
+			cursor += 1;
+		}
+	}
+	ctx->current_specifier.cursor = cursor;
+}
+
+bool	parse_conversion_specifier(t_ctx *ctx, const char *str)
 {
 	ctx->current_specifier = (t_conversion_specifier){0};
 	ctx->current_specifier.cursor = str;
 	parse_flags(ctx);
-	parse_width(ctx);
+	if (!parse_width(ctx) || !parse_precision(ctx))
+	{
+		return (false);
+	}
+	parse_length(ctx);
 	return (true);
 }
