@@ -6,9 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:01:24 by lwicket           #+#    #+#             */
-/*   Updated: 2026/07/14 14:57:32 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 14:54:20 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_isupper(int c)
 {

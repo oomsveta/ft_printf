@@ -6,9 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:20:55 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 23:24:55 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 14:54:29 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 unsigned int	ft_abs(int n)
 {

@@ -6,10 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:10:38 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 23:11:33 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 14:56:00 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stddef.h>
 
 size_t	ft_strnlen(const char *str, size_t n)

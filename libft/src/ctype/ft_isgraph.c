@@ -6,9 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 11:52:53 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/22 11:54:25 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 14:53:48 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_isgraph(int c)
 {

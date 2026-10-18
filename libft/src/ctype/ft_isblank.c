@@ -6,9 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 11:48:35 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/22 11:49:48 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 14:52:29 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_isblank(int c)
 {

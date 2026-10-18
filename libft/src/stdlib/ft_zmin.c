@@ -6,10 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 09:09:05 by lwicket           #+#    #+#             */
-/*   Updated: 2026/06/16 09:10:15 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 14:55:13 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stddef.h>
 
 /**

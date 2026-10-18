@@ -6,10 +6,11 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 19:01:12 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/01 20:53:53 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 14:55:58 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stddef.h>	// provides size_t
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
