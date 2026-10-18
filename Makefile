@@ -20,8 +20,9 @@ SRC := $(addprefix $(SRC_DIR)/, parser.c)
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEP := $(OBJ:.o=.d)
 
+UNAME_S := $(shell uname -s)
 BUILD_STATE := $(BUILD_DIR)/.build_state
-CURRENT_BUILD_STATE := "DEBUG=$(DEBUG) ASAN=$(ASAN)"
+CURRENT_BUILD_STATE := "OS=$(UNAME_S) DEBUG=$(DEBUG) ASAN=$(ASAN)"
 
 ifdef DEBUG
     CC := clang

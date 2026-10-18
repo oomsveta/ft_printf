@@ -4,8 +4,9 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 CPPFLAGS := -MMD -MP -I.
 
+UNAME_S := $(shell uname -s)
 BUILD_STATE := .build_state
-CURRENT_BUILD_STATE := "DEBUG=$(DEBUG) ASAN=$(ASAN)"
+CURRENT_BUILD_STATE := "OS=$(UNAME_S) DEBUG=$(DEBUG) ASAN=$(ASAN)"
 
 ifdef DEBUG
     CC := clang
