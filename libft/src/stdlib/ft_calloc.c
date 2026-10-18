@@ -6,13 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 00:42:15 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/08 17:35:44 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 15:00:13 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>	// provides ENOMEM, errno
+#include <stdint.h> // provides SIZE_MAX
 #include <stdlib.h>	// provides malloc, NULL, size_t
-#include "libft.h"	// provides ft_bzero, SIZE_MAX
+#include "libft.h"	// provides ft_bzero
 
 void	*ft_calloc(size_t nbr_of_elements, size_t element_size)
 {
@@ -21,8 +21,7 @@ void	*ft_calloc(size_t nbr_of_elements, size_t element_size)
 
 	if (element_size != 0 && nbr_of_elements > SIZE_MAX / element_size)
 	{
-		errno = ENOMEM;
-		return (NULL);
+		return (malloc(SIZE_MAX));
 	}
 	total_size = nbr_of_elements * element_size;
 	buffer = malloc(total_size);
