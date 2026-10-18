@@ -143,11 +143,15 @@ static void test_parse_width_overflow(void **state)
 
 typedef bool (*t_parser_fn)(t_ctx *ctx);
 
-static void call_with_va_args(t_parser_fn fn, t_ctx *ctx, ...)
+static bool call_with_va_args(t_parser_fn fn, t_ctx *ctx, ...)
 {
+    bool res;
+
     va_start(ctx->args, ctx);
-    fn(ctx);
+    res = fn(ctx);
     va_end(ctx->args);
+
+    return res;
 }
 
 static void test_parse_width_from_args_basic(void **state)
@@ -208,6 +212,98 @@ static void test_parse_width_from_args_neg_disables_zero_flag(void **state)
     assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
 }
 
+static void test_parse_precision_basic(void **state)
+{
+    (void)state;
+
+    const char *format_str = ".19d";
+    t_ctx ctx = init_ctx(format_str);
+
+    bool res = parse_precision(&ctx);
+
+    assert_true(res);
+    assert_true(ctx.current_specifier.has_precision);
+    assert_int_equal(19, ctx.current_specifier.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+}
+
+static void test_parse_precision_implicit_zero(void **state)
+{
+    (void)state;
+
+    const char *format_str = ".d";
+    t_ctx ctx = init_ctx(format_str);
+
+    bool res = parse_precision(&ctx);
+
+    assert_true(res);
+    assert_true(ctx.current_specifier.has_precision);
+    assert_int_equal(0, ctx.current_specifier.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+}
+
+static void test_parse_precision_from_args_negative_value(void **state)
+{
+    (void)state;
+
+    const char *format_str = ".*d";
+    t_ctx ctx = init_ctx(format_str);
+
+    bool res = call_with_va_args(parse_precision, &ctx, -42);
+
+    assert_true(res);
+    // providing a negative value unsets precision
+    assert_false(ctx.current_specifier.has_precision);
+    assert_int_equal(-42, ctx.current_specifier.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+}
+
+static void test_parse_precision_from_args_int_min(void **state)
+{
+    (void)state;
+
+    const char *format_str = ".*d";
+    t_ctx ctx = init_ctx(format_str);
+
+    bool res = call_with_va_args(parse_precision, &ctx, INT_MIN);
+
+    assert_true(res);
+    assert_false(ctx.current_specifier.has_precision);
+    assert_int_equal(INT_MIN, ctx.current_specifier.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+}
+
+static void test_parse_precision_from_args_int_max(void **state)
+{
+    (void)state;
+
+    const char *format_str = ".*d";
+    t_ctx ctx = init_ctx(format_str);
+
+    bool res = call_with_va_args(parse_precision, &ctx, INT_MAX);
+
+    assert_true(res);
+    assert_true(ctx.current_specifier.has_precision);
+    assert_int_equal(INT_MAX, ctx.current_specifier.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+}
+
+static void test_parse_precision_int_max(void **state)
+{
+    (void)state;
+
+    char format_str[32] = {0};
+    snprintf(format_str, sizeof format_str, ".%dd", INT_MAX);
+    t_ctx ctx = init_ctx(format_str);
+
+    bool res = parse_precision(&ctx);
+
+    assert_true(res);
+    assert_true(ctx.current_specifier.has_precision);
+    assert_int_equal(INT_MAX, ctx.current_specifier.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+}
+
 int main(void)
 {
     const struct CMUnitTest tests[] = {
@@ -227,6 +323,14 @@ int main(void)
         cmocka_unit_test(test_parse_width_from_args_negative_val),
         cmocka_unit_test(test_parse_width_from_args_int_min),
         cmocka_unit_test(test_parse_width_from_args_neg_disables_zero_flag),
+
+        cmocka_unit_test(test_parse_precision_basic),
+        cmocka_unit_test(test_parse_precision_int_max),
+
+        cmocka_unit_test(test_parse_precision_from_args_int_min),
+        cmocka_unit_test(test_parse_precision_from_args_int_max),
+        cmocka_unit_test(test_parse_precision_from_args_negative_value),
+        cmocka_unit_test(test_parse_precision_implicit_zero),
     };
 
     return cmocka_run_group_tests(tests, NULL, NULL);
