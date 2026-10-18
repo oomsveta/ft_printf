@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/18 15:12:37 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 15:14:00 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@
 #  include <windows.h>
 
 # endif
-
-# include <stddef.h>
-# include <stdint.h>
 
 # ifdef __GNUC__
 
