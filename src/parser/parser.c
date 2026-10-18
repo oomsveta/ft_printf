@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:04:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/18 15:41:58 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 16:49:32 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,23 @@
 #include <stdarg.h>
 #include <stdbool.h>
 
+/**
+ * @brief Parses a positive number from the current cursor position.
+ * 
+ * Advances the cursor as it parses and stores the successfully parsed result in
+ * the int pointed to by @p res.
+ *
+ * In case of integer overflow, @p res is set to @c INT_MIN, context's errno is
+ * set to @c ERR_INT_OVERFLOW, and the function returns false.
+ * 
+ * @param ctx Pointer to the context.
+ * @param res Pointer to an integer where the result will be stored.
+ * @return true if the integer was parsed successfully, or false if an overflow
+ *         occurred.
+ *
+ * @warning Only handles positive numbers. Tailored for use in parse_width() and
+ *          parse_precision(). Do NOT use as a general-purpose parser.
+ */
 bool	parse_int(t_ctx *ctx, int *res)
 {
 	int			acc;
@@ -42,6 +59,17 @@ bool	parse_int(t_ctx *ctx, int *res)
 	return (true);
 }
 
+/**
+ * @brief Parses a conversion specifier from the provided @p str.
+ *
+ * Fills context's @c current_specifier with the parsed data.
+ *
+ * @param ctx Pointer to the context.
+ * @param str Pointer to the start of the specifier to parse (i.e., what comes
+ 8            right after the '%' in a printf format string).
+ * @return true if parsing succeeds, or false if parsing fails and the printf
+ *         call must abort.
+ */
 bool	parse_conversion_specifier(t_ctx *ctx, const char *str)
 {
 	ctx->current_specifier = (t_conversion_specifier){0};
