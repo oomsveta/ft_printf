@@ -4,6 +4,7 @@
 !/.gitignore
 !/.gitmodules
 !/.github
+!/.clang-tidy
 
 # Vim swap files
 *.swp

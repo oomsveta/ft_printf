@@ -1,0 +1,25 @@
+---
+Checks: >
+  -*,
+  bugprone-*,
+  -bugprone-multi-level-implicit-pointer-conversion,
+  cert-*,
+  -cert-err33-c,
+  clang-analyzer-*,
+  -clang-analyzer-optin.portability.UnixAPI,
+  misc-*,
+  portability-*,
+  readability-*,
+  -readability-identifier-length,
+  -readability-redundant-parentheses,
+
+CheckOptions:
+  bugprone-unused-return-value.CheckedFunctions: '::malloc'
+
+WarningsAsErrors: >
+  bugprone-assignment-in-if-condition,
+  bugprone-unused-return-value,
+  clang-analyzer-deadcode.DeadStores,
+
+HeaderFilterRegex: 'libft\.h'
+...
