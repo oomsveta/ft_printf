@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/18 15:04:44 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/18 15:12:37 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ int				ft_isupper(int c);
 int				ft_islower(int c);
 char			*ft_stpcpy(char *dest, const char *src);
 char			*ft_stpncpy(char *restrict dest, const char *restrict src, size_t n);
+char			*ft_strcpy(char *restrict dest, const char *restrict src);
 char			*ft_strchr(const char *str, int chr);
 char			*ft_strchrnul(const char *str, int chr);
 char			*ft_strdup(const char *str);
 char			*ft_strnstr(const char *big, const char *little, size_t n);
 char			*ft_strrchr(const char *str, int chr);
+char			*ft_strlwr(char *str);
+char			*ft_strupr(char *str);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
 int				ft_isascii(int c);
@@ -56,6 +59,8 @@ int				ft_iscntrl(int c);
 int				ft_isdigit(int c);
 int				ft_isgraph(int c);
 int				ft_isprint(int c);
+int				ft_ispunct(int c);
+int				ft_isxdigit(int c);
 void			*ft_malloc(void *dest, size_t size);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
