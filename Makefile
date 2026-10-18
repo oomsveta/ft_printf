@@ -9,7 +9,7 @@ LIBFT := $(LIBFT_DIR)/libft.a
 ARFLAGS := rcs
 LDFLAGS := -L$(LIBFT_DIR)
 LDLIBS := -lft
-CFLAGS := -Wall -Wextra -Werror -Wvla -Wmissing-prototypes
+CFLAGS := -Wall -Wextra -Werror -Wvla -Wmissing-prototypes -fPIC
 DEPFLAGS := -MMD -MP
 CPPFLAGS := $(DEPFLAGS) -I$(LIBFT_DIR) -Iinclude
 

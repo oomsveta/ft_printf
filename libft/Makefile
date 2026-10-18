@@ -1,7 +1,7 @@
 NAME = libft.a
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes
+CFLAGS := -Wall -Wextra -Werror -Wmissing-prototypes -fPIC
 CPPFLAGS := -MMD -MP -I.
 
 UNAME_S := $(shell uname -s)
