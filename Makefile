@@ -15,6 +15,7 @@ CPPFLAGS := $(DEPFLAGS) -I$(LIBFT_DIR) -Iinclude
 
 SRC_DIR := src
 BUILD_DIR := build
+
 SRC := $(addprefix $(SRC_DIR)/, parser.c)
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEP := $(OBJ:.o=.d)
@@ -80,3 +81,6 @@ ifeq (,$(filter asan clean debug fclean re, $(MAKECMDGOALS)))
 endif
 
 .PHONY: asan clean debug fclean re
+
+TEST_DIR := tests
+-include $(TEST_DIR)/tests.mk
