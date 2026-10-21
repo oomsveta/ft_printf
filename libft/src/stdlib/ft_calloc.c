@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h> // provides SIZE_MAX
+#include <stdint.h> // provides PTRDIFF_MAX, SIZE_MAX
 #include <stdlib.h>	// provides malloc, NULL, size_t
 #include "libft.h"	// provides ft_bzero
 
@@ -21,7 +21,7 @@ void	*ft_calloc(size_t nbr_of_elements, size_t element_size)
 
 	if (element_size != 0 && nbr_of_elements > SIZE_MAX / element_size)
 	{
-		return (malloc(SIZE_MAX));
+		return (malloc(PTRDIFF_MAX));
 	}
 	total_size = nbr_of_elements * element_size;
 	buffer = malloc(total_size);
