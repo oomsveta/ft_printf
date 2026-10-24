@@ -22,6 +22,7 @@ $(TEST_BUILD_DIR):
 	@mkdir -p $@
 
 $(TEST_OBJS): CPPFLAGS += $(TEST_INCLUDE)
+$(TEST_OBJS): CFLAGS += -Wno-format
 $(TEST_OBJS): $(TEST_BUILD_DIR)/%.o: $(TEST_DIR)/%.c $(BUILD_STATE) | $(TEST_BUILD_DIR)
 	$(CC) $(CPPFLAGS) $(filter-out -Wmissing-prototypes, $(CFLAGS)) -c $< -o $@
 
