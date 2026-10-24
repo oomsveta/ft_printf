@@ -18,6 +18,8 @@ BUILD_DIR := build
 
 SRC := $(addprefix $(SRC_DIR)/, \
 			$(addprefix parser/, parse_flags.c parse_length.c parse_precision.c parse_width.c parser.c) \
+			$(addprefix converter/, put_percent.c) \
+			writer.c \
 		)
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEP := $(OBJ:.o=.d)
