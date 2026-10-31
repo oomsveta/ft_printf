@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:39:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/24 10:52:10 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/24 17:29:50 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,3 +87,4 @@ bool	print_formatted(t_ctx *ctx);
 // TODO: remove if ultimately useless
 typedef void    (*t_converter_fn)(t_ctx *ctx);
 size_t	convert_percent(t_ctx *ctx, char *buffer);
+size_t	convert_raw(t_ctx *ctx, char *buffer);

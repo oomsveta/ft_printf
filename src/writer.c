@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 18:30:34 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/24 10:18:29 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/31 12:48:04 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,11 @@ bool	print_formatted(t_ctx *ctx)
 	if (type == '%')
 	{
 		put_padded(ctx, formatting_buffer, convert_percent(ctx, formatting_buffer));
+	}
+	else
+	{
+		append_buffer(ctx, formatting_buffer, convert_raw(ctx, formatting_buffer));
+		return (true);
 	}
 	// return based on ctx->errno
 	return (true);
