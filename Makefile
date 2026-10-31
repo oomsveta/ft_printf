@@ -7,8 +7,8 @@ LIBFT_DIR := libft
 LIBFT := $(LIBFT_DIR)/libft.a
 
 ARFLAGS := rcs
-LDFLAGS := -L$(LIBFT_DIR)
-LDLIBS := -lft
+LDFLAGS :=
+LDLIBS :=
 CFLAGS := -Wall -Wextra -Werror -Wvla -Wmissing-prototypes -fPIC
 DEPFLAGS := -MMD -MP
 CPPFLAGS := $(DEPFLAGS) -I$(LIBFT_DIR) -Iinclude
@@ -31,11 +31,13 @@ CURRENT_BUILD_STATE := "OS=$(UNAME_S) DEBUG=$(DEBUG) ASAN=$(ASAN)"
 ifdef DEBUG
     CC := clang
     CFLAGS += -g3 -Og -fsanitize=undefined
+	LDFLAGS += -fsanitize=undefined
 else
     CFLAGS += -O3 -g -fno-builtin
 endif
 
 ifdef ASAN
+	LDFLAGS += -fsanitize=address
 	CFLAGS += -fsanitize=address
 endif
 

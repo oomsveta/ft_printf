@@ -27,7 +27,7 @@ $(TEST_OBJS): $(TEST_BUILD_DIR)/%.o: $(TEST_DIR)/%.c $(BUILD_STATE) | $(TEST_BUI
 	$(CC) $(CPPFLAGS) $(filter-out -Wmissing-prototypes, $(CFLAGS)) -c $< -o $@
 
 $(TEST_BIN): $(OBJ) $(TEST_OBJS) $(CMOCKA_LIB) $(LIBFT)
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
+	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 ifneq ($(filter test $(TEST_BIN),$(MAKECMDGOALS)),)
 -include $(TEST_DEPS)
