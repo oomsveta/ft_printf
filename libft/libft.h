@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/18 15:14:00 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 20:04:31 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ void			ft_bzero(void *buffer, size_t size);
 size_t          ft_zmin(size_t a, size_t b);
 unsigned int	ft_abs(int n);
 int				ft_digittoint(int c);
+char	        *ft_jutoa(uintmax_t n, char *dest, int radix);
 
 #endif /* LIBFT_H */
