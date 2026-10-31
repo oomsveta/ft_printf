@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:04:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/18 16:49:32 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/31 16:36:56 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ bool	parse_conversion_specifier(t_ctx *ctx, const char *str)
 	}
 	parse_length(ctx);
 	ctx->current_specifier.type = *ctx->current_specifier.cursor;
+	ctx->current_specifier.cursor += 1;
 	return (true);
 }
