@@ -27,7 +27,7 @@ void	parse_length(t_ctx *ctx)
 	{
 		cursor += 1 + (cursor[0] == cursor[1]);
 	}
-	else if (ft_strchr("jztLH", *cursor))
+	else if (*ft_strchrnul("jztLH", *cursor))
 	{
 		cursor += 1;
 	}

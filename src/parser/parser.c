@@ -81,6 +81,6 @@ bool	parse_conversion_specifier(t_ctx *ctx, const char *str)
 	}
 	parse_length(ctx);
 	ctx->current_specifier.type = *ctx->current_specifier.cursor;
-	ctx->current_specifier.cursor += 1;
+	ctx->current_specifier.cursor += *ctx->current_specifier.cursor != '\0';
 	return (true);
 }
