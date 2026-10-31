@@ -133,7 +133,7 @@ static void test_parse_width_int_max(void **state)
     (void)state;
 
     char format_str[32] = {0};
-    sprintf(format_str, "%dd", INT_MAX);
+    snprintf(format_str, sizeof format_str, "%dd", INT_MAX);
     t_ctx ctx = init_ctx(format_str);
     parse_width(&ctx);
 
