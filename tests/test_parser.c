@@ -77,6 +77,17 @@ static void test_parse_flags_does_nothing_on_empty_string(void **state)
     assert_memory_equal(&(t_flags){0}, &flags, sizeof(t_flags));
 }
 
+static void test_parse_flags_moves_cursor_to_after_flags(void **state)
+{
+    (void)state;
+
+    const char *format_str = "I''#-00 -#I++d";
+    t_ctx ctx = init_ctx(format_str);
+    parse_flags(&ctx);
+
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+}
+
 static void test_parse_width_basic(void **state)
 {
     (void)state;
@@ -312,6 +323,7 @@ int run_parser_tests(void)
         cmocka_unit_test(test_parse_flags_minus_beats_zero),
         cmocka_unit_test(test_parse_flags_skips_unsupported_flags),
         cmocka_unit_test(test_parse_flags_does_nothing_on_empty_string),
+        cmocka_unit_test(test_parse_flags_moves_cursor_to_after_flags),
 
         cmocka_unit_test(test_parse_width_basic),
         cmocka_unit_test(test_parse_width_overflow),
