@@ -29,11 +29,11 @@ BUILD_STATE := $(BUILD_DIR)/.build_state
 CURRENT_BUILD_STATE := "OS=$(UNAME_S) DEBUG=$(DEBUG) ASAN=$(ASAN)"
 
 ifdef DEBUG
-    CC := clang
-    CFLAGS += -g3 -Og -fsanitize=undefined
+	CC := clang
+	CFLAGS += -g3 -Og -fsanitize=undefined
 	LDFLAGS += -fsanitize=undefined
 else
-    CFLAGS += -O3 -g -fno-builtin
+	CFLAGS += -O3 -g -fno-builtin
 endif
 
 ifdef ASAN
