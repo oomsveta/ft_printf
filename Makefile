@@ -21,6 +21,7 @@ SRC := $(addprefix $(SRC_DIR)/, \
 			$(addprefix converter/, put_percent.c convert_raw.c) \
 			put_numeric.c put_int.c put_hex.c put_str.c put_ptr.c put_char.c \
 			writer.c \
+			ft_printf.c \
 		)
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEP := $(OBJ:.o=.d)

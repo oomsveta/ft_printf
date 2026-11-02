@@ -6,28 +6,31 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:34:51 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/24 10:16:06 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:54:04 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "ft_printf_internals.h"
+#include "libft.h"
+#include <limits.h>
 #include <stdarg.h>
 
-static int	exit_printf(t_ctx *ctx)
+static inline int	exit_printf(t_ctx *ctx)
 {
-	if (!ctx->errno)
+	flush_buffer(ctx);
+	va_end(ctx->args);
+	if (ctx->errno || ctx->total_written > INT_MAX)
 	{
-		flush_buffer(ctx);
-		// TODO should ensure that the last flush didn't result in an error
-		return ((int)ctx->total_written);
+		return (-1);
 	}
-	return (-1);
+	return ((int)ctx->total_written);
 }
 
 int	ft_printf(const char *format, ...)
 {
-	t_ctx			ctx;
+	t_ctx		ctx;
+	const char	*next;
 
 	ctx = (t_ctx){0};
 	va_start(ctx.args, format);
@@ -35,21 +38,18 @@ int	ft_printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			if (!parse_conversion_spec(&ctx, format + 1))
+			if (!parse_conversion_specification(&ctx, format + 1))
 			{
 				break ;
 			}
-			if (!print_formatted(&ctx))
-			{
-				continue ;
-			}
+			print_formatted(&ctx);
 			format = ctx.current_spec.cursor;
 		}
 		else
 		{
-			// maybe advance to the next % using strchr
-			append_buffer(&ctx, format, 1);
-			format += 1;
+			next = ft_strchrnul(format, '%');
+			append_buffer(&ctx, format, next - format);
+			format = next;
 		}
 	}
 	return (exit_printf(&ctx));

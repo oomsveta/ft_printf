@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 18:30:34 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:47:43 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 22:07:31 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	put_padded(t_ctx *ctx, const char *str, size_t len)
 	}
 }
 
-bool	print_formatted(t_ctx *ctx)
+void	print_formatted(t_ctx *ctx)
 {
 	const char	type = ctx->current_spec.type;
 	char		formatting_buffer[64];
@@ -149,8 +149,5 @@ bool	print_formatted(t_ctx *ctx)
 	else
 	{
 		append_buffer(ctx, formatting_buffer, convert_raw(ctx, formatting_buffer));
-		return (true);
 	}
-	// return based on ctx->errno
-	return (true);
 }
