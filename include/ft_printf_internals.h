@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:39:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 22:15:40 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 22:28:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	print_formatted(t_ctx *ctx);
 // TODO: remove if ultimately useless
 typedef void    (*t_converter_fn)(t_ctx *ctx);
 void	put_percent(t_ctx *ctx);
-size_t	convert_raw(t_ctx *ctx, char *buffer);
+void	put_raw(t_ctx *ctx);
 void	put_numeric(t_ctx *ctx, const char *digits, const char *prefix);
 void	put_int(t_ctx *ctx);
 void	put_hex(t_ctx *ctx);

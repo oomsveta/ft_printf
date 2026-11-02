@@ -18,8 +18,8 @@ BUILD_DIR := build
 
 SRC := $(addprefix $(SRC_DIR)/, \
 			$(addprefix parser/, parse_flags.c parse_length.c parse_precision.c parse_width.c parser.c) \
-			$(addprefix converter/, put_percent.c convert_raw.c) \
-			put_numeric.c put_int.c put_hex.c put_str.c put_ptr.c put_char.c \
+			$(addprefix converter/, put_percent.c) \
+			put_numeric.c put_int.c put_hex.c put_str.c put_ptr.c put_char.c put_raw.c \
 			writer.c \
 			ft_printf.c \
 		)

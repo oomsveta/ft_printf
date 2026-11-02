@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_raw.c                                      :+:      :+:    :+:   */
+/*   put_raw.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/24 17:29:23 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 22:25:18 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_internals.h"
 #include "libft.h"
+#include <limits.h>
 #include <stddef.h>
 
-// #'+-I
-// #' -I
-// #'+0I
-
-static char	*restore_flags(t_ctx *ctx, char *buffer)
+static inline char	*restore_flags(t_flags flags, char *buffer)
 {
-	const t_flags	flags = ctx->current_spec.flags;
-
 	if (flags.alternate_form)
 	{
 		*buffer++ = '#';
@@ -42,27 +37,29 @@ static char	*restore_flags(t_ctx *ctx, char *buffer)
 	{
 		*buffer++ = '0';
 	}
-	return buffer;;
+	return (buffer);
 }
 
-size_t	convert_raw(t_ctx *ctx, char *buffer)
+void	put_raw(t_ctx *ctx)
 {
-	const char  *t0 = buffer;
+	const t_spec	*spec = &ctx->current_spec;
+	char			buffer[128];
+	char			*cursor;
 
-	*buffer++ = '%';
-	buffer = restore_flags(ctx, buffer);
-	if (ctx->current_spec.width)
+	buffer[0] = '%';
+	cursor = restore_flags(spec->flags, buffer + 1);
+	if (spec->width)
 	{
-		ft_jutoa(ctx->current_spec.width, buffer, 10);
-		buffer = ft_strchr(buffer, '\0');
+		cursor = ft_strchr(ft_jutoa(spec->width, cursor, 10), '\0');
 	}
-	if (ctx->current_spec.has_precision)
+	if (spec->has_precision)
 	{
-		*buffer++ = '.';
-		ft_jutoa(ctx->current_spec.precision, buffer, 10);
-		buffer = ft_strchr(buffer, '\0');
+		*cursor++ = '.';
+		cursor = ft_strchr(ft_jutoa(spec->precision, cursor, 10), '\0');
 	}
-	*buffer++ = ctx->current_spec.type;
-	*buffer = '\0';
-	return ft_strlen(t0);
+	if (spec->type != '\0')
+	{
+		*cursor++ = spec->type;
+	}
+	append_buffer(ctx, buffer, cursor - buffer);
 }

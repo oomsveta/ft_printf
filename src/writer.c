@@ -120,7 +120,6 @@ void	put_padded(t_ctx *ctx, const char *str, size_t len)
 void	print_formatted(t_ctx *ctx)
 {
 	const char	type = ctx->current_spec.type;
-	char		formatting_buffer[64];
 
 	if (type == '%')
 	{
@@ -148,6 +147,6 @@ void	print_formatted(t_ctx *ctx)
 	}
 	else
 	{
-		append_buffer(ctx, formatting_buffer, convert_raw(ctx, formatting_buffer));
+		put_raw(ctx);
 	}
 }
