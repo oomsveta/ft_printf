@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 18:30:34 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:47:43 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,10 @@ bool	print_formatted(t_ctx *ctx)
 	else if (type == 'p')
 	{
 		put_ptr(ctx);
+	}
+	else if (type == 'c')
+	{
+		put_char(ctx);
 	}
 	else
 	{

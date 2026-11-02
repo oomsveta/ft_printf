@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:39:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:32:50 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:47:17 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,3 +99,4 @@ void	put_int(t_ctx *ctx);
 void	put_hex(t_ctx *ctx);
 void	put_str(t_ctx *ctx);
 void	put_ptr(t_ctx *ctx);
+void	put_char(t_ctx *ctx);
