@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 18:30:34 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 22:07:31 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 22:15:33 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	flush_buffer(t_ctx *ctx)
 	ssize_t	write_res;
 	size_t	total_written;
 
-	if (ctx->errno)
+	if (ctx->error)
 	{
 		return ;
 	}
@@ -35,7 +35,7 @@ void	flush_buffer(t_ctx *ctx)
 		write_res = write(STDOUT_FILENO, ctx->buffer.data + total_written, ctx->buffer.length);
 		if (write_res == WRITE_ERROR)
 		{
-			ctx->errno = ERR_WRITE_FAILURE;
+			ctx->error = ERR_WRITE_FAILURE;
 			return ;
 		}
 		ctx->buffer.length -= write_res;
@@ -59,7 +59,7 @@ void	append_buffer(t_ctx *ctx, const char *str, size_t len)
 		if (ctx->buffer.length == PRINTF_BUFFER_SIZE)
 		{
 			flush_buffer(ctx);
-			if (ctx->errno)
+			if (ctx->error)
 			{
 				return ;
 			}
@@ -82,7 +82,7 @@ void	fill_buffer(t_ctx *ctx, char c, size_t n)
 		if (ctx->buffer.length == PRINTF_BUFFER_SIZE)
 		{
 			flush_buffer(ctx);
-			if (ctx->errno)
+			if (ctx->error)
 			{
 				return ;
 			}

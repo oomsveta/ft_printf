@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:34:51 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:54:04 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 22:15:33 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static inline int	exit_printf(t_ctx *ctx)
 {
 	flush_buffer(ctx);
 	va_end(ctx->args);
-	if (ctx->errno || ctx->total_written > INT_MAX)
+	if (ctx->error || ctx->total_written > INT_MAX)
 	{
 		return (-1);
 	}
@@ -34,7 +34,7 @@ int	ft_printf(const char *format, ...)
 
 	ctx = (t_ctx){0};
 	va_start(ctx.args, format);
-	while (!ctx.errno && *format != '\0')
+	while (!ctx.error && *format != '\0')
 	{
 		if (*format == '%')
 		{

@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 15:38:50 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 22:15:33 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	parse_width(t_ctx *ctx)
 			spec->flags.pad_with_zeros = false;
 			if (width == INT_MIN)
 			{
-				ctx->errno = ERR_INT_OVERFLOW;
+				ctx->error = ERR_INT_OVERFLOW;
 				return (false);
 			}
 		}

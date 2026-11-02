@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:04:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:30:56 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 22:15:33 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * Advances the cursor as it parses and stores the successfully parsed result in
  * the int pointed to by @p res.
  *
- * In case of integer overflow, @p res is set to @c INT_MIN, context's errno is
+ * In case of integer overflow, @p res is set to @c INT_MIN, context's error is
  * set to @c ERR_INT_OVERFLOW, and the function returns false.
  * 
  * @param ctx Pointer to the context.
@@ -47,7 +47,7 @@ bool	parse_int(t_ctx *ctx, int *res)
 		digit = ft_digittoint(*nptr);
 		if (acc > cutoff || (acc == cutoff && digit > cutlim))
 		{
-			ctx->errno = ERR_INT_OVERFLOW;
+			ctx->error = ERR_INT_OVERFLOW;
 			*res = INT_MIN;
 			return (false);
 		}

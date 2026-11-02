@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:39:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 22:07:38 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 22:15:40 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_ctx
 {
 	t_buffer	buffer;
 	size_t		total_written;
-	t_error		errno;
+	t_error		error;
 	va_list		args;
 	t_spec		current_spec;
 }	t_ctx;
