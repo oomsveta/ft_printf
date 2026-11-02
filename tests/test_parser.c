@@ -310,12 +310,12 @@ static void test_parse_precision_int_max(void **state)
     bool res = parse_precision(&ctx);
 
     assert_true(res);
-    assert_true(ctx.current_specifier.has_precision);
-    assert_int_equal(INT_MAX, ctx.current_specifier.precision);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_true(ctx.current_spec.has_precision);
+    assert_int_equal(INT_MAX, ctx.current_spec.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
-int run_parser_tests(void)
+int run_parser_tests(void) // NOLINT(misc-use-internal-linkage)
 {
     const struct CMUnitTest tests[] = {
         cmocka_unit_test(test_parse_flags_multiple_flags),
