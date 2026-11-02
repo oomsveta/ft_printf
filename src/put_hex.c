@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:10:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 20:31:21 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:20:57 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	put_hex(t_ctx *ctx)
 {
 	const unsigned int				n = va_arg(ctx->args, unsigned int);
 	const t_conversion_specifier	*spec = &ctx->current_specifier;
-	char							digits[sizeof(unsigned int) * CHAR_BIT + 1];
+	char							digits[(sizeof(unsigned int) * CHAR_BIT + 3) / 4 + 1];
 
 	if (n == 0 && spec->has_precision && spec->precision == 0)
 	{
