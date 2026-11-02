@@ -98,3 +98,4 @@ void	put_numeric(t_ctx *ctx, const char *digits, const char *prefix);
 void	put_int(t_ctx *ctx);
 void	put_hex(t_ctx *ctx);
 void	put_str(t_ctx *ctx);
+void	put_ptr(t_ctx *ctx);
