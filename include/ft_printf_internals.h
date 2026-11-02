@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:39:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/24 17:29:50 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/31 19:00:41 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ typedef struct s_ctx
 	t_conversion_specifier	current_specifier;
 }	t_ctx;
 
+typedef struct s_padding
+{
+	size_t	zeros;
+	size_t	spaces;
+}	t_padding;
+
 #define WRITE_ERROR (-1)
 
 // parser
@@ -79,12 +85,16 @@ bool	parse_int(t_ctx *ctx, int *res);
 void	flush_buffer(t_ctx *ctx);
 void	append_buffer(t_ctx *ctx, const char *str, size_t len);
 void	fill_buffer(t_ctx *ctx, char c, size_t n);
-void	put_padded(t_ctx *ctx, char *buffer, size_t buffer_len);
+void	put_padded(t_ctx *ctx, const char *str, size_t len);
 bool	print_formatted(t_ctx *ctx);
 
 // converter
 
 // TODO: remove if ultimately useless
 typedef void    (*t_converter_fn)(t_ctx *ctx);
-size_t	convert_percent(t_ctx *ctx, char *buffer);
+void	put_percent(t_ctx *ctx);
 size_t	convert_raw(t_ctx *ctx, char *buffer);
+void	put_numeric(t_ctx *ctx, const char *digits, const char *prefix);
+void	put_int(t_ctx *ctx);
+void	put_hex(t_ctx *ctx);
+void	put_str(t_ctx *ctx);

@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 18:30:34 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/31 12:48:04 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 20:50:21 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,36 +90,30 @@ void	fill_buffer(t_ctx *ctx, char c, size_t n)
 	}	
 }
 
-void	put_padded(t_ctx *ctx, char *buffer, size_t buffer_len)
+void	put_padded(t_ctx *ctx, const char *str, size_t len)
 {
-	char	padding_char;
-	size_t	padding_len;
+	const t_conversion_specifier	*spec = &ctx->current_specifier;
+	char							padding_char;
+	size_t							padding_len;
 
-	if (ctx->current_specifier.width > 0)
+	padding_len = 0;
+	if ((size_t)spec->width > len)
 	{
-		padding_len = ctx->current_specifier.width - buffer_len;
-		if (ctx->current_specifier.flags.pad_with_zeros)
-		{
-			padding_char = '0';
-		}
-		else
-		{
-			padding_char = ' ';
-		}
-		if (!ctx->current_specifier.flags.left_justify)
-		{
-			fill_buffer(ctx, padding_char, padding_len);
-			append_buffer(ctx, buffer, buffer_len);
-		}
-		else
-		{
-			append_buffer(ctx, buffer, buffer_len);
-			fill_buffer(ctx, padding_char, padding_len);
-		}
+		padding_len = (size_t)spec->width - len;
 	}
-	else
+	padding_char = ' ';
+	if (spec->flags.pad_with_zeros)
 	{
-		append_buffer(ctx, buffer, buffer_len);
+		padding_char = '0';
+	}
+	if (!spec->flags.left_justify)
+	{
+		fill_buffer(ctx, padding_char, padding_len);
+	}
+	append_buffer(ctx, str, len);
+	if (spec->flags.left_justify)
+	{
+		fill_buffer(ctx, padding_char, padding_len);
 	}
 }
 
@@ -130,7 +124,19 @@ bool	print_formatted(t_ctx *ctx)
 
 	if (type == '%')
 	{
-		put_padded(ctx, formatting_buffer, convert_percent(ctx, formatting_buffer));
+		put_percent(ctx);
+	}
+	else if (type == 'i' || type == 'd')
+	{
+		put_int(ctx);
+	}
+	else if (type == 'x' || type == 'X')
+	{
+		put_hex(ctx);
+	}
+	else if (type == 's')
+	{
+		put_str(ctx);
 	}
 	else
 	{

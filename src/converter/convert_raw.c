@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/24 17:29:23 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/31 12:26:45 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 20:53:53 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ size_t	convert_raw(t_ctx *ctx, char *buffer)
 	buffer = restore_flags(ctx, buffer);
 	if (ctx->current_specifier.width)
 	{
-		ft_itoa(ctx->current_specifier.width, buffer);
+		ft_jutoa(ctx->current_specifier.width, buffer, 10);
 		buffer = ft_strchr(buffer, '\0');
 	}
 	if (ctx->current_specifier.has_precision)
 	{
 		*buffer++ = '.';
-		ft_itoa(ctx->current_specifier.precision, buffer);
+		ft_jutoa(ctx->current_specifier.precision, buffer, 10);
 		buffer = ft_strchr(buffer, '\0');
 	}
 	*buffer++ = ctx->current_specifier.type;
