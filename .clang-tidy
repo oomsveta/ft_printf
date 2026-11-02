@@ -12,6 +12,7 @@ Checks: >
   readability-*,
   -readability-identifier-length,
   -readability-implicit-bool-conversion,
+  -readability-math-missing-parentheses,
   -readability-redundant-parentheses,
   
 CheckOptions:
