@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/01 16:33:22 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:19:41 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static inline const char	*get_prefix(t_flags flags, int n)
 
 void	put_int(t_ctx *ctx)
 {
-	const int						n = va_arg(ctx->args, int);
-	char							buffer[(sizeof(int) * CHAR_BIT - 1) * 28 / 93 + 2];
-	const t_conversion_specifier	*spec = &ctx->current_specifier;
+	const int		n = va_arg(ctx->args, int);
+	char			buffer[(sizeof(int) * CHAR_BIT - 1) * 28 / 93 + 2];
+	const t_spec	*spec = &ctx->current_spec;
 
 	if (n == 0 && spec->has_precision && spec->precision == 0)
 	{

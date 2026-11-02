@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:39:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/31 19:00:41 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:32:50 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_flag
 
 #define IGNORED_FLAGS "I'"
 
-typedef struct s_conversion_specifier
+typedef struct s_spec
 {
 	int				width;
 	int				precision;
@@ -36,7 +36,7 @@ typedef struct s_conversion_specifier
 	char			type;
 	t_flags			flags;
 	const char		*cursor;
-}	t_conversion_specifier;
+}	t_spec;
 
 #define PRINTF_BUFFER_SIZE 4096
 
@@ -56,11 +56,11 @@ typedef enum e_error
 
 typedef struct s_ctx
 {
-	t_buffer				buffer;
-	size_t					total_written;
-	t_error					errno;
-	va_list					args;
-	t_conversion_specifier	current_specifier;
+	t_buffer	buffer;
+	size_t		total_written;
+	t_error		errno;
+	va_list		args;
+	t_spec		current_spec;
 }	t_ctx;
 
 typedef struct s_padding
@@ -73,7 +73,7 @@ typedef struct s_padding
 
 // parser
 
-bool	parse_conversion_specifier(t_ctx *ctx, const char *str);
+bool	parse_conversion_specification(t_ctx *ctx, const char *str);
 void	parse_flags(t_ctx *ctx);
 bool	parse_width(t_ctx *ctx);
 bool	parse_precision(t_ctx *ctx);

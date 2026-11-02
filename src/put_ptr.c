@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 21:30:00 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:13:25 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	put_ptr(t_ctx *ctx)
 	t_flags				*flags;
 	char				digits[(sizeof(uintptr_t) * CHAR_BIT + 3) / 4 + 1];
 
-	flags = &ctx->current_specifier.flags;
+	flags = &ctx->current_spec.flags;
 	if (ptr == 0)
 	{
 		flags->pad_with_zeros = false;

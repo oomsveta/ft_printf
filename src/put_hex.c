@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:10:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:20:57 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
  * ---------------
  * For x (or X) conversion, a nonzero result has 0x (or 0X) prefixed to it.
  */
-static const char	*get_prefix(const t_conversion_specifier *spec,
-	unsigned int n)
+static const char	*get_prefix(const t_spec *spec, unsigned int n)
 {
 	if (!spec->flags.alternate_form || n == 0)
 	{
@@ -36,9 +35,9 @@ static const char	*get_prefix(const t_conversion_specifier *spec,
 
 void	put_hex(t_ctx *ctx)
 {
-	const unsigned int				n = va_arg(ctx->args, unsigned int);
-	const t_conversion_specifier	*spec = &ctx->current_specifier;
-	char							digits[(sizeof(unsigned int) * CHAR_BIT + 3) / 4 + 1];
+	const unsigned int	n = va_arg(ctx->args, unsigned int);
+	const t_spec	    *spec = &ctx->current_spec;
+	char			    digits[(sizeof(unsigned int) * CHAR_BIT + 3) / 4 + 1];
 
 	if (n == 0 && spec->has_precision && spec->precision == 0)
 	{

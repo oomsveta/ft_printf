@@ -8,7 +8,7 @@
 static t_ctx init_ctx(const char *cursor)
 {
     t_ctx ctx = {0};
-    ctx.current_specifier.cursor = cursor;
+    ctx.current_spec.cursor = cursor;
     return ctx;
 }
 
@@ -26,7 +26,7 @@ static void test_parse_flags_multiple_flags(void **state)
         .reserve_sign_space = false,    // space
         .pad_with_zeros = false,        // 0
     };
-    t_flags obtained = ctx.current_specifier.flags;
+    t_flags obtained = ctx.current_spec.flags;
     assert_memory_equal(&expected, &obtained, sizeof(t_flags));
 }
 
@@ -37,7 +37,7 @@ static void test_parse_flags_plus_beats_space(void **state)
     t_ctx ctx = init_ctx(" + d");
     parse_flags(&ctx);
 
-    t_flags flags = ctx.current_specifier.flags;
+    t_flags flags = ctx.current_spec.flags;
     assert_true(flags.force_sign);          // +
     assert_false(flags.reserve_sign_space); // space
 }
@@ -49,7 +49,7 @@ static void test_parse_flags_minus_beats_zero(void **state)
     t_ctx ctx = init_ctx("0-0d");
     parse_flags(&ctx);
 
-    t_flags flags = ctx.current_specifier.flags;
+    t_flags flags = ctx.current_spec.flags;
     assert_true(flags.left_justify);    // -
     assert_false(flags.pad_with_zeros); // 0
 }
@@ -61,7 +61,7 @@ static void test_parse_flags_skips_unsupported_flags(void **state)
     t_ctx ctx = init_ctx("I'+d");
     parse_flags(&ctx);
 
-    t_flags flags = ctx.current_specifier.flags;
+    t_flags flags = ctx.current_spec.flags;
     // if + is reached it means I and ' have been skipped
     assert_true(flags.force_sign);
 }
@@ -73,7 +73,7 @@ static void test_parse_flags_does_nothing_on_empty_string(void **state)
     t_ctx ctx = init_ctx("");
     parse_flags(&ctx);
 
-    t_flags flags = ctx.current_specifier.flags;
+    t_flags flags = ctx.current_spec.flags;
     assert_memory_equal(&(t_flags){0}, &flags, sizeof(t_flags));
 }
 
@@ -85,7 +85,7 @@ static void test_parse_flags_moves_cursor_to_after_flags(void **state)
     t_ctx ctx = init_ctx(format_str);
     parse_flags(&ctx);
 
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_width_basic(void **state)
@@ -96,8 +96,8 @@ static void test_parse_width_basic(void **state)
     t_ctx ctx = init_ctx(format_str);
     parse_width(&ctx);
 
-    assert_int_equal(1337, ctx.current_specifier.width);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_int_equal(1337, ctx.current_spec.width);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_width_no_width(void **state)
@@ -107,11 +107,11 @@ static void test_parse_width_no_width(void **state)
     const char *format_str = "d";
     t_ctx ctx = init_ctx(format_str);
     // set width to something to ensure it gets overwritten
-    ctx.current_specifier.width = 19;
+    ctx.current_spec.width = 19;
     parse_width(&ctx);
 
-    assert_int_equal(0, ctx.current_specifier.width);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_int_equal(0, ctx.current_spec.width);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_width_empty_string(void **state)
@@ -121,11 +121,11 @@ static void test_parse_width_empty_string(void **state)
     const char *format_str = "";
     t_ctx ctx = init_ctx(format_str);
     // set width to something to ensure it gets overwritten
-    ctx.current_specifier.width = 19;
+    ctx.current_spec.width = 19;
     parse_width(&ctx);
 
-    assert_int_equal(0, ctx.current_specifier.width);
-    assert_ptr_equal(strchr(format_str, '\0'), ctx.current_specifier.cursor);
+    assert_int_equal(0, ctx.current_spec.width);
+    assert_ptr_equal(strchr(format_str, '\0'), ctx.current_spec.cursor);
 }
 
 static void test_parse_width_int_max(void **state)
@@ -137,8 +137,8 @@ static void test_parse_width_int_max(void **state)
     t_ctx ctx = init_ctx(format_str);
     parse_width(&ctx);
 
-    assert_int_equal(INT_MAX, ctx.current_specifier.width);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_int_equal(INT_MAX, ctx.current_spec.width);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_width_overflow(void **state)
@@ -148,7 +148,7 @@ static void test_parse_width_overflow(void **state)
     t_ctx ctx = init_ctx("99999999999999999999999d");
     parse_width(&ctx);
 
-    assert_int_equal(INT_MIN, ctx.current_specifier.width);
+    assert_int_equal(INT_MIN, ctx.current_spec.width);
     assert_int_equal(ERR_INT_OVERFLOW, ctx.errno);
 }
 
@@ -174,8 +174,8 @@ static void test_parse_width_from_args_basic(void **state)
 
     call_with_va_args(parse_width, &ctx, 10);
 
-    assert_int_equal(10, ctx.current_specifier.width);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_int_equal(10, ctx.current_spec.width);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_width_from_args_negative_val(void **state)
@@ -187,9 +187,9 @@ static void test_parse_width_from_args_negative_val(void **state)
 
     call_with_va_args(parse_width, &ctx, -10);
 
-    assert_true(ctx.current_specifier.flags.left_justify);
-    assert_int_equal(10, ctx.current_specifier.width);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_true(ctx.current_spec.flags.left_justify);
+    assert_int_equal(10, ctx.current_spec.width);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_width_from_args_int_min(void **state)
@@ -200,8 +200,8 @@ static void test_parse_width_from_args_int_min(void **state)
 
     call_with_va_args(parse_width, &ctx, INT_MIN);
 
-    assert_true(ctx.current_specifier.flags.left_justify);
-    assert_int_equal(INT_MIN, ctx.current_specifier.width);
+    assert_true(ctx.current_spec.flags.left_justify);
+    assert_int_equal(INT_MIN, ctx.current_spec.width);
     assert_int_equal(ctx.errno, ERR_INT_OVERFLOW);
 }
 
@@ -211,16 +211,16 @@ static void test_parse_width_from_args_neg_disables_zero_flag(void **state)
 
     const char *format_str = "*d";
     t_ctx ctx = init_ctx(format_str);
-    ctx.current_specifier.flags.pad_with_zeros = true;  // set '0' flag
+    ctx.current_spec.flags.pad_with_zeros = true;  // set '0' flag
 
     call_with_va_args(parse_width, &ctx, -42);
 
     // Providing a negative width is equivalent to setting the '-' flag.
-    assert_true(ctx.current_specifier.flags.left_justify);
+    assert_true(ctx.current_spec.flags.left_justify);
     // '-' flag is incompatible with '0' flag. If both are defined, '-' wins.
-    assert_false(ctx.current_specifier.flags.pad_with_zeros);
-    assert_int_equal(42, ctx.current_specifier.width);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_false(ctx.current_spec.flags.pad_with_zeros);
+    assert_int_equal(42, ctx.current_spec.width);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_precision_basic(void **state)
@@ -233,9 +233,9 @@ static void test_parse_precision_basic(void **state)
     bool res = parse_precision(&ctx);
 
     assert_true(res);
-    assert_true(ctx.current_specifier.has_precision);
-    assert_int_equal(19, ctx.current_specifier.precision);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_true(ctx.current_spec.has_precision);
+    assert_int_equal(19, ctx.current_spec.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_precision_implicit_zero(void **state)
@@ -248,9 +248,9 @@ static void test_parse_precision_implicit_zero(void **state)
     bool res = parse_precision(&ctx);
 
     assert_true(res);
-    assert_true(ctx.current_specifier.has_precision);
-    assert_int_equal(0, ctx.current_specifier.precision);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_true(ctx.current_spec.has_precision);
+    assert_int_equal(0, ctx.current_spec.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_precision_from_args_negative_value(void **state)
@@ -264,9 +264,9 @@ static void test_parse_precision_from_args_negative_value(void **state)
 
     assert_true(res);
     // providing a negative value unsets precision
-    assert_false(ctx.current_specifier.has_precision);
-    assert_int_equal(-42, ctx.current_specifier.precision);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_false(ctx.current_spec.has_precision);
+    assert_int_equal(-42, ctx.current_spec.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_precision_from_args_int_min(void **state)
@@ -279,9 +279,9 @@ static void test_parse_precision_from_args_int_min(void **state)
     bool res = call_with_va_args(parse_precision, &ctx, INT_MIN);
 
     assert_true(res);
-    assert_false(ctx.current_specifier.has_precision);
-    assert_int_equal(INT_MIN, ctx.current_specifier.precision);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_false(ctx.current_spec.has_precision);
+    assert_int_equal(INT_MIN, ctx.current_spec.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_precision_from_args_int_max(void **state)
@@ -294,9 +294,9 @@ static void test_parse_precision_from_args_int_max(void **state)
     bool res = call_with_va_args(parse_precision, &ctx, INT_MAX);
 
     assert_true(res);
-    assert_true(ctx.current_specifier.has_precision);
-    assert_int_equal(INT_MAX, ctx.current_specifier.precision);
-    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_specifier.cursor);
+    assert_true(ctx.current_spec.has_precision);
+    assert_int_equal(INT_MAX, ctx.current_spec.precision);
+    assert_ptr_equal(strchr(format_str, 'd'), ctx.current_spec.cursor);
 }
 
 static void test_parse_precision_int_max(void **state)

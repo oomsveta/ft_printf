@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 15:38:59 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/18 15:39:44 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,26 @@
  */
 bool	parse_precision(t_ctx *ctx)
 {
-	t_conversion_specifier	*specifier;
-	int						precision;
+	t_spec	*spec;
+	int		precision;
 
-	specifier = &ctx->current_specifier;
-	specifier->has_precision = *specifier->cursor == '.';
-	if (!specifier->has_precision)
+	spec = &ctx->current_spec;
+	spec->has_precision = *spec->cursor == '.';
+	if (!spec->has_precision)
 	{
 		return (true);
 	}
-	specifier->cursor += 1;
-	if (*specifier->cursor == '*')
+	spec->cursor += 1;
+	if (*spec->cursor == '*')
 	{
-		specifier->cursor += 1;
+		spec->cursor += 1;
 		precision = va_arg(ctx->args, int);
-		specifier->precision = precision;
+		spec->precision = precision;
 		if (precision < 0)
 		{
-			specifier->has_precision = false;
+			spec->has_precision = false;
 		}
 		return (true);
 	}
-	return (parse_int(ctx, &specifier->precision));
+	return (parse_int(ctx, &spec->precision));
 }

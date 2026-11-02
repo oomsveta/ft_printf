@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:04:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/31 16:36:56 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:56 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	parse_int(t_ctx *ctx, int *res)
 {
 	int			acc;
 	int			digit;
-	const char	*nptr = ctx->current_specifier.cursor;
+	const char	*nptr = ctx->current_spec.cursor;
 	const int	cutoff = INT_MAX / 10;
 	const int	cutlim = INT_MAX % 10;
 
@@ -54,33 +54,33 @@ bool	parse_int(t_ctx *ctx, int *res)
 		acc = acc * 10 + digit;
 		nptr += 1;
 	}
-	ctx->current_specifier.cursor = nptr;
+	ctx->current_spec.cursor = nptr;
 	*res = acc;
 	return (true);
 }
 
 /**
- * @brief Parses a conversion specifier from the provided @p str.
+ * @brief Parses a conversion spec from the provided @p str.
  *
- * Fills context's @c current_specifier with the parsed data.
+ * Fills context's @c current_spec with the parsed data.
  *
  * @param ctx Pointer to the context.
- * @param str Pointer to the start of the specifier to parse (i.e., what comes
+ * @param str Pointer to the start of the spec to parse (i.e., what comes
  8            right after the '%' in a printf format string).
  * @return true if parsing succeeds, or false if parsing fails and the printf
  *         call must abort.
  */
-bool	parse_conversion_specifier(t_ctx *ctx, const char *str)
+bool	parse_conversion_specification(t_ctx *ctx, const char *str)
 {
-	ctx->current_specifier = (t_conversion_specifier){0};
-	ctx->current_specifier.cursor = str;
+	ctx->current_spec = (t_spec){0};
+	ctx->current_spec.cursor = str;
 	parse_flags(ctx);
 	if (!parse_width(ctx) || !parse_precision(ctx))
 	{
 		return (false);
 	}
 	parse_length(ctx);
-	ctx->current_specifier.type = *ctx->current_specifier.cursor;
-	ctx->current_specifier.cursor += *ctx->current_specifier.cursor != '\0';
+	ctx->current_spec.type = *ctx->current_spec.cursor;
+	ctx->current_spec.cursor += *ctx->current_spec.cursor != '\0';
 	return (true);
 }

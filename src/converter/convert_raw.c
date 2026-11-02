@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/24 17:29:23 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 20:53:53 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 static char	*restore_flags(t_ctx *ctx, char *buffer)
 {
-	const t_flags	flags = ctx->current_specifier.flags;
+	const t_flags	flags = ctx->current_spec.flags;
 
 	if (flags.alternate_form)
 	{
@@ -51,18 +51,18 @@ size_t	convert_raw(t_ctx *ctx, char *buffer)
 
 	*buffer++ = '%';
 	buffer = restore_flags(ctx, buffer);
-	if (ctx->current_specifier.width)
+	if (ctx->current_spec.width)
 	{
-		ft_jutoa(ctx->current_specifier.width, buffer, 10);
+		ft_jutoa(ctx->current_spec.width, buffer, 10);
 		buffer = ft_strchr(buffer, '\0');
 	}
-	if (ctx->current_specifier.has_precision)
+	if (ctx->current_spec.has_precision)
 	{
 		*buffer++ = '.';
-		ft_jutoa(ctx->current_specifier.precision, buffer, 10);
+		ft_jutoa(ctx->current_spec.precision, buffer, 10);
 		buffer = ft_strchr(buffer, '\0');
 	}
-	*buffer++ = ctx->current_specifier.type;
+	*buffer++ = ctx->current_spec.type;
 	*buffer = '\0';
 	return ft_strlen(t0);
 }

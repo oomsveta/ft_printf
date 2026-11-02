@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 15:38:54 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/31 12:59:29 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void	parse_flags(t_ctx *ctx)
 {
 	t_flags		flags;
-	const char	*str = ctx->current_specifier.cursor;
+	const char	*str = ctx->current_spec.cursor;
 
 	flags = (t_flags){0};
 	while (true)
@@ -40,6 +40,6 @@ void	parse_flags(t_ctx *ctx)
 	}
 	flags.reserve_sign_space &= !flags.force_sign;
 	flags.pad_with_zeros &= !flags.left_justify;
-	ctx->current_specifier.flags = flags;
-	ctx->current_specifier.cursor = str;
+	ctx->current_spec.flags = flags;
+	ctx->current_spec.cursor = str;
 }

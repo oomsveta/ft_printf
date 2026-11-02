@@ -7,7 +7,7 @@ static void test_put_padded_basic(void **state)
     (void)state;
 
     t_ctx ctx = {0};
-    ctx.current_specifier.width = 10;
+    ctx.current_spec.width = 10;
 
     put_padded(&ctx, "shrek", 5);
 
@@ -20,8 +20,8 @@ static void test_put_padded_zero(void **state)
     (void)state;
 
     t_ctx ctx = {0};
-    ctx.current_specifier.width = 10;
-    ctx.current_specifier.flags.pad_with_zeros = true;
+    ctx.current_spec.width = 10;
+    ctx.current_spec.flags.pad_with_zeros = true;
 
     put_padded(&ctx, "shrek", 5);
 
@@ -34,8 +34,8 @@ static void test_put_padded_left_justify(void **state)
     (void)state;
 
     t_ctx ctx = {0};
-    ctx.current_specifier.width = 10;
-    ctx.current_specifier.flags.left_justify = true;
+    ctx.current_spec.width = 10;
+    ctx.current_spec.flags.left_justify = true;
 
     put_padded(&ctx, "shrek", 5);
 

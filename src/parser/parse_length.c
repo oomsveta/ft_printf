@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 15:38:57 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/18 15:40:21 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  */
 void	parse_length(t_ctx *ctx)
 {
-	const char	*cursor = ctx->current_specifier.cursor;
+	const char	*cursor = ctx->current_spec.cursor;
 
 	if (*cursor == 'l' || *cursor == 'h' || *cursor == 'D')
 	{
@@ -43,5 +43,5 @@ void	parse_length(t_ctx *ctx)
 			cursor += 1;
 		}
 	}
-	ctx->current_specifier.cursor = cursor;
+	ctx->current_spec.cursor = cursor;
 }

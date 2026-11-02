@@ -35,7 +35,7 @@ int	ft_printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			if (!parse_conversion_specifier(&ctx, format + 1))
+			if (!parse_conversion_spec(&ctx, format + 1))
 			{
 				break ;
 			}
@@ -43,7 +43,7 @@ int	ft_printf(const char *format, ...)
 			{
 				continue ;
 			}
-			format = ctx.current_specifier.cursor;
+			format = ctx.current_spec.cursor;
 		}
 		else
 		{

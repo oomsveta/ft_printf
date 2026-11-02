@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 15:38:50 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/18 15:40:34 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@
  */
 bool	parse_width(t_ctx *ctx)
 {
-	t_conversion_specifier	*specifier;
-	int						width;
+	t_spec	*spec;
+	int		width;
 
-	specifier = &ctx->current_specifier;
-	if (*specifier->cursor == '*')
+	spec = &ctx->current_spec;
+	if (*spec->cursor == '*')
 	{
-		specifier->cursor += 1;
+		spec->cursor += 1;
 		width = va_arg(ctx->args, int);
-		specifier->width = (int)ft_abs(width);
+		spec->width = (int)ft_abs(width);
 		if (width < 0)
 		{
-			specifier->flags.left_justify = true;
-			specifier->flags.pad_with_zeros = false;
+			spec->flags.left_justify = true;
+			spec->flags.pad_with_zeros = false;
 			if (width == INT_MIN)
 			{
 				ctx->errno = ERR_INT_OVERFLOW;
@@ -51,5 +51,5 @@ bool	parse_width(t_ctx *ctx)
 		}
 		return (true);
 	}
-	return (parse_int(ctx, &specifier->width));
+	return (parse_int(ctx, &spec->width));
 }

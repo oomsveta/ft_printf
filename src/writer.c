@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 18:30:34 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:14:24 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ void	fill_buffer(t_ctx *ctx, char c, size_t n)
 
 void	put_padded(t_ctx *ctx, const char *str, size_t len)
 {
-	const t_conversion_specifier	*spec = &ctx->current_specifier;
-	char							padding_char;
-	size_t							padding_len;
+	const t_spec	*spec = &ctx->current_spec;
+	char			padding_char;
+	size_t			padding_len;
 
 	padding_len = 0;
 	if ((size_t)spec->width > len)
@@ -119,7 +119,7 @@ void	put_padded(t_ctx *ctx, const char *str, size_t len)
 
 bool	print_formatted(t_ctx *ctx)
 {
-	const char	type = ctx->current_specifier.type;
+	const char	type = ctx->current_spec.type;
 	char		formatting_buffer[64];
 
 	if (type == '%')

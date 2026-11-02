@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/01 14:20:15 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 20:20:20 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * [prefix][zeros][digits][spaces]  ('-' flag)
  */
 static inline t_padding	compute_padding(
-	const t_conversion_specifier *spec, size_t prefix_len, size_t digits_len
+	const t_spec *spec, size_t prefix_len, size_t digits_len
 )
 {
 	t_padding	padding;
@@ -47,11 +47,10 @@ static inline t_padding	compute_padding(
 
 void	put_numeric(t_ctx *ctx, const char *digits, const char *prefix)
 {
-	const size_t					prefix_len = ft_strlen(prefix);
-	const size_t					digits_len = ft_strlen(digits);
-	const t_conversion_specifier	*spec = &ctx->current_specifier;
-	const t_padding					padding
-		= compute_padding(spec, prefix_len, digits_len);
+	const size_t	prefix_len = ft_strlen(prefix);
+	const size_t	digits_len = ft_strlen(digits);
+	const t_spec	*spec = &ctx->current_spec;
+	const t_padding	padding = compute_padding(spec, prefix_len, digits_len);
 
 	if (!spec->flags.left_justify)
 	{

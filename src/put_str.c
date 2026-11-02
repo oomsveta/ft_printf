@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:47:40 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:09:14 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 void	put_str(t_ctx *ctx)
 {
-	t_conversion_specifier	*spec;
-	const char				*str = va_arg(ctx->args, const char *);
-	size_t					len;
+	t_spec		*spec;
+	const char	*str = va_arg(ctx->args, const char *);
+	size_t		len;
 
-	spec = &ctx->current_specifier;
+	spec = &ctx->current_spec;
 	spec->flags.pad_with_zeros = false;
 	if (str == NULL)
 	{
