@@ -19,7 +19,7 @@ BUILD_DIR := build
 SRC := $(addprefix $(SRC_DIR)/, \
 			$(addprefix parser/, parse_flags.c parse_length.c parse_precision.c parse_width.c parser.c) \
 			$(addprefix formatter/, put_percent.c put_numeric.c put_int.c put_hex.c put_str.c put_ptr.c put_char.c put_raw.c) \
-			writer.c \
+			$(addprefix writer/, append_buffer.c fill_buffer.c flush_buffer.c put_padded.c) \
 			ft_printf.c \
 		)
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)

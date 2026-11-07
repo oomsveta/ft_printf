@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:39:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 22:32:39 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/07 16:35:39 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,18 @@ typedef struct s_padding
 	size_t	spaces;
 }	t_padding;
 
-#define WRITE_ERROR (-1)
+typedef void	(*t_put_fn)(t_ctx *ctx);
+
+typedef enum e_conversion_id
+{
+	CONV_RAW = 0,
+	CONV_PERCENT,
+	CONV_INT,
+	CONV_HEX,
+	CONV_STR,
+	CONV_PTR,
+	CONV_CHAR,
+}	t_conversion_id;
 
 // parser
 
@@ -86,7 +97,6 @@ void	flush_buffer(t_ctx *ctx);
 void	append_buffer(t_ctx *ctx, const char *str, size_t len);
 void	fill_buffer(t_ctx *ctx, char c, size_t n);
 void	put_padded(t_ctx *ctx, const char *str, size_t len);
-void	print_formatted(t_ctx *ctx);
 
 // formatter
 

@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:34:51 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 22:15:33 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/04 16:09:01 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,32 @@ static inline int	exit_printf(t_ctx *ctx)
 	return ((int)ctx->total_written);
 }
 
+static void	dispatch_conversion(t_ctx *ctx)
+{
+	static const t_put_fn		put_fns[] = {
+	[CONV_RAW] = put_raw, [CONV_PERCENT] = put_percent,
+	[CONV_INT] = put_int, [CONV_HEX] = put_hex, [CONV_STR] = put_str,
+	[CONV_PTR] = put_ptr, [CONV_CHAR] = put_char,
+	};
+	static const unsigned char	indices['x' - '%' + 1] = {
+	['%' - '%'] = CONV_PERCENT, ['d' - '%'] = CONV_INT,
+	['i' - '%'] = CONV_INT, ['x' - '%'] = CONV_HEX,
+	['X' - '%'] = CONV_HEX, ['s' - '%'] = CONV_STR,
+	['p' - '%'] = CONV_PTR, ['c' - '%'] = CONV_CHAR,
+	};
+	size_t						i;
+
+	i = (size_t)(unsigned char)ctx->current_spec.type - '%';
+	if (i < sizeof indices)
+	{
+		put_fns[indices[i]](ctx);
+	}
+	else
+	{
+		put_raw(ctx);
+	}
+}
+
 int	ft_printf(const char *format, ...)
 {
 	t_ctx		ctx;
@@ -42,7 +68,7 @@ int	ft_printf(const char *format, ...)
 			{
 				break ;
 			}
-			print_formatted(&ctx);
+			dispatch_conversion(&ctx);
 			format = ctx.current_spec.cursor;
 		}
 		else
