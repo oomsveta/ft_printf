@@ -80,6 +80,7 @@ typedef enum e_conversion_id
 	CONV_STR,
 	CONV_PTR,
 	CONV_CHAR,
+	CONV_UNSIGNED,
 }	t_conversion_id;
 
 // parser
@@ -108,3 +109,4 @@ void	put_hex(t_ctx *ctx);
 void	put_str(t_ctx *ctx);
 void	put_ptr(t_ctx *ctx);
 void	put_char(t_ctx *ctx);
+void	put_unsigned(t_ctx *ctx);
