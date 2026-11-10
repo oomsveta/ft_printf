@@ -23,5 +23,5 @@ WarningsAsErrors: >
   bugprone-unused-return-value,
   clang-analyzer-deadcode.DeadStores,
 
-HeaderFilterRegex: 'libft\.h'
+HeaderFilterRegex: '(ft_printf.*|libft)\.h'
 ...
