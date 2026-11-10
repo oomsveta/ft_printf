@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 20:10:58 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 21:30:19 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/10 22:44:08 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static const char	*get_prefix(const t_spec *spec, unsigned int n)
 void	put_hex(t_ctx *ctx)
 {
 	const unsigned int	n = va_arg(ctx->args, unsigned int);
-	const t_spec	    *spec = &ctx->current_spec;
-	char			    digits[(sizeof(unsigned int) * CHAR_BIT + 3) / 4 + 1];
+	const t_spec		*spec = &ctx->current_spec;
+	char				digits[(sizeof(unsigned int) * CHAR_BIT + 3) / 4 + 1];
 
 	if (n == 0 && spec->has_precision && spec->precision == 0)
 	{
