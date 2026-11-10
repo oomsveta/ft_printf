@@ -28,17 +28,17 @@
  */
 void	fill_buffer(t_ctx *ctx, char c, size_t n)
 {
-	size_t	total_appended;
+	size_t	room_left;
 	size_t	len;
 
-	total_appended = 0;
-	while (total_appended < n)
+	while (n > 0)
 	{
-		len = ft_zmin(n - total_appended, PRINTF_BUFFER_SIZE - ctx->buffer.length);
+		room_left = sizeof ctx->buffer.data - ctx->buffer.length;
+		len = ft_zmin(n, room_left);
 		ft_memset(ctx->buffer.data + ctx->buffer.length, c, len);
 		ctx->buffer.length += len;
-		total_appended += len;
-		if (ctx->buffer.length == PRINTF_BUFFER_SIZE)
+		n -= len;
+		if (ctx->buffer.length == sizeof ctx->buffer.data)
 		{
 			flush_buffer(ctx);
 			if (ctx->error)
@@ -46,5 +46,5 @@ void	fill_buffer(t_ctx *ctx, char c, size_t n)
 				return ;
 			}
 		}
-	}	
+	}
 }

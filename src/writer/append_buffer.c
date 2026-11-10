@@ -26,16 +26,17 @@
  */
 void	append_buffer(t_ctx *ctx, const char *str, size_t len)
 {
-	size_t	total_appended;
+	size_t	room_left;
 	size_t	copy_size;
 
-	total_appended = 0;
-	while (total_appended < len)
+	while (len > 0)
 	{
-		copy_size = ft_zmin(len - total_appended, sizeof ctx->buffer.data - ctx->buffer.length);
-		ft_memcpy(ctx->buffer.data + ctx->buffer.length, str + total_appended, copy_size);
+		room_left = sizeof ctx->buffer.data - ctx->buffer.length;
+		copy_size = ft_zmin(len, room_left);
+		ft_memcpy(ctx->buffer.data + ctx->buffer.length, str, copy_size);
 		ctx->buffer.length += copy_size;
-		total_appended += copy_size;
+		str += copy_size;
+		len -= copy_size;
 		if (ctx->buffer.length == sizeof ctx->buffer.data)
 		{
 			flush_buffer(ctx);
