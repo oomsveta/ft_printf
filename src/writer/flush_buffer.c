@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 22:40:12 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/07 16:34:08 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/12 12:47:35 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	flush_buffer(t_ctx *ctx)
 				STDOUT_FILENO,
 				ctx->buffer.data + total_written,
 				ctx->buffer.length);
-		if (bytes_written == -1)
+		if (bytes_written <= 0)
 		{
 			ctx->error = ERR_WRITE_FAILURE;
 			return ;
