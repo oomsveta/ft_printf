@@ -90,7 +90,7 @@ ifeq (,$(filter asan clean debug fclean re, $(MAKECMDGOALS)))
 -include $(DEP)
 endif
 
-.PHONY: asan clean bonus debug fclean re
+.PHONY: all asan clean bonus debug fclean re
 
 TEST_DIR := tests
 -include $(TEST_DIR)/tests.mk
