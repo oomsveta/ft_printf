@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 22:01:27 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/02 20:04:31 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/12 10:00:18 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@ typedef uintptr_t __attribute__(\
 
 # else
 
-typedef unsigned char							t_word;
-typedef unsigned char							t_aligned_word;
+typedef unsigned char								t_word;
+typedef unsigned char								t_aligned_word;
 
 # endif
 
 int				ft_isupper(int c);
 int				ft_islower(int c);
 char			*ft_stpcpy(char *dest, const char *src);
-char			*ft_stpncpy(char *restrict dest, const char *restrict src, size_t n);
+char			*ft_stpncpy(
+					char *restrict dest, const char *restrict src, size_t n);
 char			*ft_strcpy(char *restrict dest, const char *restrict src);
 char			*ft_strchr(const char *str, int chr);
 char			*ft_strchrnul(const char *str, int chr);
@@ -74,9 +75,9 @@ void			*ft_memcpy(void *dest, const void *src, size_t n);
 void			*ft_memmove(void *dest, const void *src, size_t n);
 void			*ft_memset(void *buffer, int byte, size_t size);
 void			ft_bzero(void *buffer, size_t size);
-size_t          ft_zmin(size_t a, size_t b);
+size_t			ft_zmin(size_t a, size_t b);
 unsigned int	ft_abs(int n);
 int				ft_digittoint(int c);
-char	        *ft_jutoa(uintmax_t n, char *dest, int radix);
+char			*ft_jutoa(uintmax_t n, char *dest, int radix);
 
 #endif /* LIBFT_H */
