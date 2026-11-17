@@ -68,6 +68,8 @@ FORCE:
 asan:
 	@$(MAKE) DEBUG=1 ASAN=1 re
 
+bonus: all
+
 debug:
 	@$(MAKE) DEBUG=1 re
 
@@ -88,7 +90,7 @@ ifeq (,$(filter asan clean debug fclean re, $(MAKECMDGOALS)))
 -include $(DEP)
 endif
 
-.PHONY: asan clean debug fclean re
+.PHONY: asan clean bonus debug fclean re
 
 TEST_DIR := tests
 -include $(TEST_DIR)/tests.mk
