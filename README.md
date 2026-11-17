@@ -1,6 +1,6 @@
 *This project has been created as part of the 42 curriculum by lwicket.*
 
-## ℹ️ Description
+## ℹ️ Project Overview
 
 `ft_printf` is one of the first projects at 42 School. It consists of reimplementing parts of the printf function in C, on top of nothing but the [`write(2)`](https://sites.uclouvain.be/SystInfo/manpages/man2/write.2.html) syscall.
 
@@ -16,7 +16,7 @@ The assignment mandates support for the following conversion specifiers: `%`, `c
 
 For bonus points, the conversions must also handle all of the following flags: `-`, `+`, space, `0`, `#`. That is, all the standard flags.
 
-## Instructions
+## 🛠️ Build & Usage
 
 ### Requirements
 
@@ -103,7 +103,7 @@ The output is buffered, as printing character by character would involve so many
 
 The buffer has a size of 4096 bytes, like in other popular libcs. As per the assignment, the buffer management of the original printf is NOT reproduced: the buffer is flushed when ft_printf returns (rather than at program exit) or when it is full. The buffering mode can't be changed by the user.
 
-## 📚 Resources
+## 📚 References & Acknowledgments
 
 ### ISO/IEC 9899:2024 aka C23
 
