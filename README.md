@@ -44,6 +44,20 @@ cc <your src/obj files> libftprintf.a -I<path to the directory containing ft_pri
 > [!WARNING]
 > `libftprintf.a` must come AFTER everything that uses it in the list of files you provide to the compiler. This is because the linker discards all the functions in your archive that aren't currently needed, and its list of necessary functions is based exclusively on the objects it has parsed so far. If `libftprintf.a` is the very first file provided in your link command, all of its contents will be discarded!
 
+### Example usage
+
+```c
+#include "ft_printf.h"
+
+/**
+ * Print "42 in hex is 0X002A".
+ */
+int main(void)
+{
+    ft_printf("%d in %.*s is %#06X\n", 42, 3, "hexadecimal", 42);
+}
+```
+
 ## 📋 Coding Style
 
 My coding style conforms to the [Norm](./norm.en.pdf), a set of strict style guidelines enforced for all C exercises, which every student must follow under penalty of a zero grade.
